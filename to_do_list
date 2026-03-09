@@ -1,0 +1,27 @@
+class Task:
+    def __init__(self, title, deadline, priority, category):
+        self.title = title
+        self.deadline = deadline
+        self.priority = priority
+        self.category = category
+
+    def __str__(self):
+        return f"{self.title} [{self.category}] - Priority {self.priority}, Deadline {self.deadline}"
+
+class ToDoList:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task)
+
+    def filter_by_category(self, category):
+        return [task for task in self.tasks if task.category == category]
+
+# Example
+todo = ToDoList()
+todo.add_task(Task("Finish DBMS project", "2026-03-15", "High", "College"))
+todo.add_task(Task("Buy groceries", "2026-03-10", "Medium", "Personal"))
+
+for task in todo.filter_by_category("College"):
+    print(task)

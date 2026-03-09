@@ -1,0 +1,24 @@
+class Freelancer:
+    def __init__(self, name, skill):
+        self.name = name
+        self.skill = skill
+
+class Client:
+    def __init__(self, name):
+        self.name = name
+
+class Project:
+    def __init__(self, title, freelancer, client, payment):
+        self.title = title
+        self.freelancer = freelancer
+        self.client = client
+        self.payment = payment
+
+    def show_details(self):
+        return f"{self.client.name} assigned '{self.title}' to {self.freelancer.name} for ${self.payment}"
+
+# Example
+f1 = Freelancer("Ravi", "Web Development")
+c1 = Client("TechCorp")
+p1 = Project("Website Design", f1, c1, 500)
+print(p1.show_details())

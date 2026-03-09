@@ -1,0 +1,17 @@
+class Customer:
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+        self.logs = []
+
+    def add_log(self, message):
+        self.logs.append(message)
+
+    def show_logs(self):
+        return self.logs
+
+# Example
+cust1 = Customer("Rahul", "rahul@example.com")
+cust1.add_log("Called customer about new product.")
+cust1.add_log("Customer requested a demo.")
+print(f"Logs for {cust1.name}:", cust1.show_logs())

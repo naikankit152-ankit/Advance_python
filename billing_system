@@ -1,0 +1,28 @@
+class Product:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+class Bill:
+    def __init__(self):
+        self.items = []
+
+    def add_item(self, product, qty):
+        self.items.append((product, qty))
+
+    def generate_bill(self, discount=0):
+        total = sum(p.price * qty for p, qty in self.items)
+        total_after_discount = total - (total * discount / 100)
+        print("Bill Details:")
+        for p, qty in self.items:
+            print(f"{p.name} x{qty} = ₹{p.price * qty}")
+        print(f"Total: ₹{total}, After Discount: ₹{total_after_discount}")
+
+# Example
+p1 = Product("Shirt", 500)
+p2 = Product("Jeans", 1200)
+
+bill = Bill()
+bill.add_item(p1, 2)
+bill.add_item(p2, 1)
+bill.generate_bill(discount=10)

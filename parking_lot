@@ -1,0 +1,30 @@
+class ParkingLot:
+    def __init__(self, capacity, fee_per_hour):
+        self.capacity = capacity
+        self.fee_per_hour = fee_per_hour
+        self.vehicles = {}
+
+    def vehicle_entry(self, plate, hours):
+        if len(self.vehicles) < self.capacity:
+            self.vehicles[plate] = hours
+            print(f"Vehicle {plate} entered for {hours} hours.")
+        else:
+            print("Parking Full!")
+
+    def vehicle_exit(self, plate):
+        if plate in self.vehicles:
+            hours = self.vehicles.pop(plate)
+            fee = hours * self.fee_per_hour
+            print(f"Vehicle {plate} exited. Fee: ₹{fee}")
+        else:
+            print("Vehicle not found.")
+
+    def available_spots(self):
+        return self.capacity - len(self.vehicles)
+
+# Example
+lot = ParkingLot(2, 50)
+lot.vehicle_entry("OD01AB1234", 3)
+lot.vehicle_entry("OD02XY5678", 2)
+lot.vehicle_exit("OD01AB1234")
+print("Available spots:", lot.available_spots())

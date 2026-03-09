@@ -1,0 +1,18 @@
+class Student:
+    def __init__(self, name, roll_no):
+        self.name = name
+        self.roll_no = roll_no
+        self.marks = {}
+
+    def add_marks(self, subject, score):
+        self.marks[subject] = score
+
+    def calculate_gpa(self):
+        total = sum(self.marks.values())
+        return total / len(self.marks)
+
+# Example
+s1 = Student("Ankit", 101)
+s1.add_marks("Math", 85)
+s1.add_marks("Science", 90)
+print(f"{s1.name}'s GPA: {s1.calculate_gpa()}")
