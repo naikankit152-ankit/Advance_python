@@ -1,0 +1,97 @@
+#Flight Booking System
+
+import random
+
+class FlightBookingSystem:
+
+    def __init__(self):
+        self.flights = {
+            "F101": {"route": "Delhi to Mumbai", "seats": 5},
+            "F102": {"route": "Kolkata to Bangalore", "seats": 3},
+            "F103": {"route": "Chennai to Hyderabad", "seats": 4}
+        }
+
+        self.bookings = {}
+
+    def search_flights(self):
+        print("\nAvailable Flights:")
+        for fid, details in self.flights.items():
+            print(fid, "-", details["route"], "- Seats:", details["seats"])
+
+    def book_ticket(self):
+        try:
+            fid = input("Enter Flight ID: ")
+            name = input("Enter Passenger Name: ")
+
+            if name.strip() == "":
+                raise Exception("Invalid passenger details")
+
+            if fid not in self.flights:
+                raise Exception("Invalid flight ID")
+
+            if self.flights[fid]["seats"] <= 0:
+                raise Exception("Seat not available")
+
+            payment = random.choice([True, False]) 
+
+            if not payment:
+                raise Exception("Payment failure")
+
+            booking_id = len(self.bookings) + 1
+
+            self.flights[fid]["seats"] -= 1
+            self.bookings[booking_id] = {"flight": fid, "name": name}
+
+            print("Booking successful")
+            print("Booking ID:", booking_id)
+
+        except Exception as e:
+            print("Error:", e)
+
+    def cancel_ticket(self):
+        try:
+            booking_id = int(input("Enter Booking ID to cancel: "))
+
+            if booking_id not in self.bookings:
+                raise Exception("Invalid booking ID")
+
+            fid = self.bookings[booking_id]["flight"]
+
+            self.flights[fid]["seats"] += 1
+            del self.bookings[booking_id]
+
+            print("Ticket cancelled successfully")
+
+        except ValueError:
+            print("Booking ID must be numeric")
+
+        except Exception as e:
+            print("Error:", e)
+
+system = FlightBookingSystem()
+
+while True:
+
+    print("\n----- Flight Booking System -----")
+    print("1. Search Flights")
+    print("2. Book Ticket")
+    print("3. Cancel Ticket")
+    print("4. Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+        system.search_flights()
+
+    elif choice == "2":
+        system.book_ticket()
+
+    elif choice == "3":
+        system.cancel_ticket()
+
+    elif choice == "4":
+        print("Program Ended")
+        break
+
+    else:
+        print("Invalid choice")

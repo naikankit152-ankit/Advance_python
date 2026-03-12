@@ -1,0 +1,132 @@
+#Bank Transaction System
+
+import time
+
+class BankingSystem:
+
+    def __init__(self):
+        self.accounts = {}
+
+    def create_account(self):
+        try:
+            acc_no = input("Enter Account Number: ")
+
+            if acc_no.strip() == "":
+                raise Exception("Invalid account number")
+
+            if acc_no in self.accounts:
+                raise Exception("Account already exists")
+
+            balance = float(input("Enter Initial Balance: "))
+
+            self.accounts[acc_no] = balance
+            print("Account created successfully")
+
+        except ValueError:
+            print("Balance must be numeric")
+        except Exception as e:
+            print("Error:", e)
+
+    def deposit(self):
+        try:
+            acc_no = input("Enter Account Number: ")
+
+            if acc_no not in self.accounts:
+                raise Exception("Incorrect account number")
+
+            amount = float(input("Enter deposit amount: "))
+
+            self.accounts[acc_no] += amount
+            print("Deposit successful")
+
+        except ValueError:
+            print("Invalid amount")
+        except Exception as e:
+            print("Error:", e)
+
+    def withdraw(self):
+        try:
+            acc_no = input("Enter Account Number: ")
+
+            if acc_no not in self.accounts:
+                raise Exception("Incorrect account number")
+
+            amount = float(input("Enter withdrawal amount: "))
+
+            if amount > self.accounts[acc_no]:
+                raise Exception("Overdraft error: Insufficient balance")
+
+            self.accounts[acc_no] -= amount
+            print("Withdrawal successful")
+
+        except ValueError:
+            print("Invalid amount")
+        except Exception as e:
+            print("Error:", e)
+
+    def transfer(self):
+        try:
+            sender = input("Enter Sender Account Number: ")
+            receiver = input("Enter Receiver Account Number: ")
+
+            if sender not in self.accounts or receiver not in self.accounts:
+                raise Exception("Incorrect account number")
+
+            amount = float(input("Enter transfer amount: "))
+
+            time.sleep(2)
+
+            if amount > self.accounts[sender]:
+                raise Exception("Overdraft error")
+
+            self.accounts[sender] -= amount
+            self.accounts[receiver] += amount
+
+            print("Transaction successful")
+
+        except ValueError:
+            print("Invalid amount")
+        except Exception as e:
+            print("Error:", e)
+
+    def display_accounts(self):
+        print("\nAccount Details")
+        for acc, bal in self.accounts.items():
+            print("Account:", acc, "Balance:", bal)
+
+
+bank = BankingSystem()
+
+while True:
+
+    print("\n----- Banking System -----")
+    print("1. Create Account")
+    print("2. Deposit")
+    print("3. Withdraw")
+    print("4. Transfer")
+    print("5. Display Accounts")
+    print("6. Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+        bank.create_account()
+
+    elif choice == "2":
+        bank.deposit()
+
+    elif choice == "3":
+        bank.withdraw()
+
+    elif choice == "4":
+        bank.transfer()
+
+    elif choice == "5":
+        bank.display_accounts()
+
+    elif choice == "6":
+        print("Program Ended")
+        break
+
+    else:
+        print("Invalid choice")
