@@ -1,0 +1,116 @@
+#E-Commerce Order Management
+
+class EcommerceSystem:
+
+    def __init__(self):
+        self.products = {
+            "Laptop": 5,
+            "Phone": 10,
+            "Headphones": 7
+        }
+
+        self.valid_coupons = {"SAVE10": 10, "SAVE20": 20}
+        self.payment_methods = ["UPI", "Card", "NetBanking"]
+        self.orders = {}
+
+    def place_order(self):
+        try:
+            product = input("Enter product name: ")
+            qty = int(input("Enter quantity: "))
+
+            if product not in self.products:
+                raise Exception("Invalid product")
+
+            if qty > self.products[product]:
+                raise Exception("Out of stock")
+
+            coupon = input("Enter coupon code (or press Enter): ")
+
+            discount = 0
+            if coupon != "":
+                if coupon not in self.valid_coupons:
+                    raise Exception("Invalid coupon code")
+                discount = self.valid_coupons[coupon]
+
+            payment = input("Enter payment method (UPI/Card/NetBanking): ")
+
+            if payment not in self.payment_methods:
+                raise Exception("Invalid payment method")
+
+            order_id = len(self.orders) + 1
+
+            self.products[product] -= qty
+            self.orders[order_id] = product
+
+            print("Order placed successfully")
+            print("Order ID:", order_id)
+            print("Discount applied:", discount, "%")
+
+        except ValueError:
+            print("Quantity must be a number")
+
+        except Exception as e:
+            print("Error:", e)
+
+    def return_order(self):
+        try:
+            order_id = int(input("Enter Order ID to return: "))
+
+            if order_id not in self.orders:
+                raise Exception("Invalid order ID")
+
+            product = self.orders[order_id]
+            self.products[product] += 1
+
+            print("Return request processed")
+
+        except ValueError:
+            print("Order ID must be numeric")
+
+        except Exception as e:
+            print("Error:", e)
+
+    def refund(self):
+        try:
+            order_id = int(input("Enter Order ID for refund: "))
+
+            if order_id not in self.orders:
+                raise Exception("Invalid order ID")
+
+            del self.orders[order_id]
+
+            print("Refund processed successfully")
+
+        except ValueError:
+            print("Order ID must be numeric")
+
+        except Exception as e:
+            print("Error:", e)
+
+shop = EcommerceSystem()
+
+while True:
+
+    print("\n----- E-Commerce System -----")
+    print("1. Place Order")
+    print("2. Return Order")
+    print("3. Refund")
+    print("4. Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+        shop.place_order()
+
+    elif choice == "2":
+        shop.return_order()
+
+    elif choice == "3":
+        shop.refund()
+
+    elif choice == "4":
+        print("Program Ended")
+        break
+
+    else:
+        print("Invalid choice")
